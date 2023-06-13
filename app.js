@@ -5,10 +5,11 @@ const createPlayer = (name, marker) => {
 const playerOne = createPlayer("Joe", "x")
 const playerTwo = createPlayer("Computer", "o")
 let activePlayer = playerOne;
+const squares = document.getElementsByClassName("squares");
+
 
 const gameBoard = (function(){
     boardArray = Array.apply(null, Array(9))
-    const squares = document.getElementsByClassName("squares");
     
     const setActivePlayer = () => {
         if (activePlayer === playerOne){
@@ -24,9 +25,9 @@ const gameBoard = (function(){
             if (e.target.innerHTML === "") {
                 e.target.innerHTML = activePlayer.marker;
                 boardArray.splice([i], 1, activePlayer.marker);
+                checkWin(activePlayer.marker)
                 setActivePlayer()
             }
-            checkWin()
         })
     }
 })();
@@ -39,10 +40,18 @@ const gameController = (() => {
 
 
 
-const checkWin = function () {
+const checkWin = function (marker) {
+
+    const reset = function() {
+        boardArray = Array.apply(null, Array(9))
+        for (let square of squares){
+            square.innerHTML = "";
+        }
+    }
+
     const checkArray = function() {
         return boardArray.reduce(function(q, e, i) {
-            if (e === "x"){
+            if (e === marker){
             q.push(i);
         }
             return q;
@@ -63,14 +72,20 @@ const checkWin = function () {
 
     for (let comb of combs){
         stringA = comb.join();
-        stringB = checkArray().join();
-       // console.log(stringA + " + " + stringB)
+        stringB = checkArray(marker).join();
+        stringC = boardArray.join("");
 
        if (stringB.includes(stringA)){
-        console.log("win")
+        console.log(marker + " wins")
+        reset()
+
+       } else if (stringC.length === 9){
+        console.log("draw")
+        reset()
+
        }
  
-        }
+    }
         
  }
 
