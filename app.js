@@ -2,35 +2,67 @@ const createPlayer = (name, marker) => {
     return {name, marker};
 }
 
-const playerOne = createPlayer("Joe", "x")
-const playerTwo = createPlayer("Computer", "o")
-let activePlayer = playerOne;
+
 const squares = document.getElementsByClassName("squares");
 
 
-const gameBoard = (function(){
+const form = document.getElementById('form');
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    gameBoard(player_name.value);
+    form.reset();
+
+})
+
+
+const gameBoard = function(playerName){
+    const playerOne = createPlayer(playerName, "x")
+    const playerTwo = createPlayer("Computer", "o")
     boardArray = Array.apply(null, Array(9))
     
-    const setActivePlayer = () => {
-        if (activePlayer === playerOne){
-            activePlayer = playerTwo
-        } else {
-            activePlayer = playerOne
-        }
-};
+//     const setActivePlayer = () => {
+//         if (activePlayer === playerOne){
+//             activePlayer = playerTwo
+//         } else {
+//             activePlayer = playerOne
+//         }
+// };
 
 
     for (let i = 0; i < squares.length; i++){
         squares[i].addEventListener('click', (e) => {
             if (e.target.innerHTML === "") {
-                e.target.innerHTML = activePlayer.marker;
-                boardArray.splice([i], 1, activePlayer.marker);
-                checkWin(activePlayer.marker)
-                setActivePlayer()
+                boardArray.splice([i], 1, playerOne.marker);
+                displayArray()
+                checkWin(playerOne)
+                computersTurn();
+                //setActivePlayer()
             }
         })
     }
-})();
+
+    const displayArray = function (){
+        for (let i = 0; i < squares.length; i++){
+            if (boardArray[i] !== undefined){
+                squares[i].innerHTML = boardArray[i];
+            }
+        }
+    }
+
+    const computersTurn = function (){
+        const getRanNum = () => {
+            return Math.floor(Math.random() * 8);
+        }
+        let x = getRanNum()
+        if (boardArray[x] === undefined){
+        boardArray.splice([x], 1, playerTwo.marker);
+        checkWin(playerTwo)
+
+        } else {computersTurn()}
+        displayArray();
+    }
+ 
+};
 
 const gameController = (() => {
 
@@ -40,8 +72,8 @@ const gameController = (() => {
 
 
 
-const checkWin = function (marker) {
-
+const checkWin = function (player) {
+    let marker = player.marker
     const reset = function() {
         boardArray = Array.apply(null, Array(9))
         for (let square of squares){
@@ -76,14 +108,14 @@ const checkWin = function (marker) {
         stringC = boardArray.join("");
 
        if (stringB.includes(stringA)){
-        console.log(marker + " wins")
+        console.log(player.name + " wins")
         reset()
 
        } else if (stringC.length === 9){
         console.log("draw")
         reset()
 
-       }
+       } 
  
     }
         
