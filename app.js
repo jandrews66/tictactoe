@@ -36,7 +36,6 @@ const gameBoard = function(playerName){
                 displayArray()
                 checkWin(playerOne)
                 computersTurn();
-                //setActivePlayer()
             }
         })
     }
@@ -51,7 +50,7 @@ const gameBoard = function(playerName){
 
     const computersTurn = function (){
         const getRanNum = () => {
-            return Math.floor(Math.random() * 8);
+            return Math.floor(Math.random() * 9);
         }
         let x = getRanNum()
         if (boardArray[x] === undefined){
@@ -73,7 +72,9 @@ const gameController = (() => {
 
 
 const checkWin = function (player) {
+    const winText = document.querySelector("h2")
     let marker = player.marker
+
     const reset = function() {
         boardArray = Array.apply(null, Array(9))
         for (let square of squares){
@@ -108,11 +109,12 @@ const checkWin = function (player) {
         stringC = boardArray.join("");
 
        if (stringB.includes(stringA)){
-        console.log(player.name + " wins")
+
+        winText.innerHTML = player.name + " wins!"
         reset()
 
        } else if (stringC.length === 9){
-        console.log("draw")
+        winText.innerHTML = "Draw!"
         reset()
 
        } 

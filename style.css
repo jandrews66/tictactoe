@@ -1,27 +1,103 @@
 * {
     margin: 0;
     padding: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
   }
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#heading {
+    grid-column: 2/3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+h1 {
+    grid-column: 2/3;
+    align-self: center;
+    justify-self: center;
+    padding: 20px 0px;
+}
+
+h2 {
+    height: 20px;
+    padding-bottom: 50px;
+}
+
+#form {
+    grid-column: 2/3;
+    justify-self: center;
+}
+
+ul {
+    list-style: none;
+    padding-bottom: 40px;
+   
+}
+
+li {
+    padding: 10px 0px;
+}
+
+input {
+    padding: 4px;
+    width: 125px;
+    border-radius: 4px;
+    border-color: rgb(0, 0, 0);
+    border-width: 2px;
+    border-style: solid;
+}
+
+#submit_btn {
+    border: 2px solid black;
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 10px 25px;
+    cursor:pointer;
+}
+
+label {
+    position: relative;
+}
+
+label,input{
+    display:flex;
+    flex-direction:column;
+    padding-bottom: 5px;
+}
 
 #board {
     width: 450px;
     height: 450px;
     display: grid;
+    grid-column: 2/3;
     grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 40px;
+    justify-self: center;
 }
 
 #board > div {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    font-size: 50px;
+    height: 150px;
+    align-items: center;
+    justify-items: center;
 
 }
 
 #board :nth-child(2), :nth-child(5), :nth-child(8) {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
 }
 
 #board :nth-child(4), :nth-child(5), :nth-child(6) {
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
 }
